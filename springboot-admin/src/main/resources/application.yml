@@ -1,0 +1,92 @@
+server:
+  # 服务端口
+  port: 8080
+  servlet:
+    # 应用上下文路径
+    context-path: /
+    # 响应编码配置
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+
+app:
+  database:
+    # 数据库类型：mysql / sqlite，修改此处即可切换
+    type: sqlite
+
+spring:
+  application:
+    # 应用名称
+    name: springboot-admin
+  profiles:
+    # 根据 app.database.type 自动激活对应 profile
+    active: ${app.database.type:mysql}
+  servlet:
+    multipart:
+      # 单个文件最大大小
+      max-file-size: 100MB
+      # 单次请求最大大小
+      max-request-size: 100MB
+
+# JWT 配置
+jwt:
+  # 密钥（生产环境请使用复杂字符串）
+  secret: SpringBootAdminJwtSecretKey2024!
+  # Token 有效期（单位：毫秒，默认 7 天）
+  expiration: 604800000
+  # Token 请求头名称
+  header: Authorization
+  # Token 前缀
+  prefix: Bearer
+
+# MyBatis Plus 配置
+mybatis-plus:
+  # Mapper XML 文件位置
+  mapper-locations: classpath*:mapper/**/*.xml
+  # 实体类别名包路径
+  type-aliases-package: com.example.admin.entity
+  configuration:
+    # 开启驼峰命名自动映射
+    map-underscore-to-camel-case: true
+    # 开启日志打印（开发环境）
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      # 逻辑删除字段名
+      logic-delete-field: deleted
+      # 逻辑删除值（已删除）
+      logic-delete-value: 1
+      # 逻辑未删除值
+      logic-not-delete-value: 0
+
+# 对象存储配置（兼容阿里云 OSS、腾讯云 COS、七牛云、MinIO 等 S3 协议存储）
+object-storage:
+  type: oss
+  oss:
+    # 访问站点，如 oss-cn-beijing.aliyuncs.com、cos.ap-shanghai.myqcloud.com
+    end-point:
+    # AccessKeyId
+    access-key-id:
+    # AccessKeySecret
+    access-key-secret:
+    # 存储空间名
+    bucket:
+    # 存储区域，为空时自动从 endpoint 解析（如 cn-beijing、ap-shanghai）
+    region:
+    # 是否使用 HTTPS（Y=是，N=否）
+    is-https: N
+    # 桶权限类型（0=private 1=public 2=custom）
+    access-policy: 1
+    # 文件前缀（可选）
+    prefix:
+
+# 日志配置
+logging:
+  # 日志配置文件位置
+  config: classpath:logback-spring.xml
+  level:
+    # 根日志级别
+    root: info
+    # 项目包日志级别
+    com.example.admin: debug

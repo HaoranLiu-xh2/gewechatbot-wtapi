@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.admin.mapper.WxMessageMapper">
+
+    <!-- 将指定时间之前的消息归档到历史表，然后删除原表记录 -->
+    <!-- MySQL 版本：使用 ON DUPLICATE KEY UPDATE 处理重复归档 -->
+    <insert id="archiveMessages" databaseId="mysql" parameterType="java.lang.Long">
+        INSERT INTO wx_message_history (
+            id, user_id, app_id, wxid, msg_id, new_msg_id,
+            from_wxid, to_wxid, msg_type, content, msg_time, raw_data, archive_time
+        )
+        SELECT
+            id, user_id, app_id, wxid, msg_id, new_msg_id,
+            from_wxid, to_wxid, msg_type, content, msg_time, raw_data, NOW()
+        FROM wx_message
+        WHERE msg_time &lt; #{beforeTime}
+
+        ON DUPLICATE KEY UPDATE
+            user_id = VALUES(user_id),
+            app_id = VALUES(app_id),
+            wxid = VALUES(wxid),
+            msg_id = VALUES(msg_id),
+            new_msg_id = VALUES(new_msg_id),
+            from_wxid = VALUES(from_wxid),
+            to_wxid = VALUES(to_wxid),
+            msg_type = VALUES(msg_type),
+            content = VALUES(content),
+            msg_time = VALUES(msg_time),
+            raw_data = VALUES(raw_data),
+            archive_time = NOW()
+    </insert>
+
+    <!-- SQLite 版本：使用 INSERT OR REPLACE 处理重复归档 -->
+    <insert id="archiveMessages" databaseId="sqlite" parameterType="java.lang.Long">
+        INSERT OR REPLACE INTO wx_message_history (
+            id, user_id, app_id, wxid, msg_id, new_msg_id,
+            from_wxid, to_wxid, msg_type, content, msg_time, raw_data, archive_time
+        )
+        SELECT
+            id, user_id, app_id, wxid, msg_id, new_msg_id,
+            from_wxid, to_wxid, msg_type, content, msg_time, raw_data, CURRENT_TIMESTAMP
+        FROM wx_message
+        WHERE msg_time &lt; #{beforeTime}
+    </insert>
+
+    <!-- 兜底版本：未识别数据库类型时使用 MySQL 语法 -->
+    <insert id="archiveMessages" parameterType="java.lang.Long">
+        INSERT INTO wx_message_history (
+            id, user_id, app_id, wxid, msg_id, new_msg_id,
+            from_wxid, to_wxid, msg_type, content, msg_time, raw_data, archive_time
+        )
+        SELECT
+            id, user_id, app_id, wxid, msg_id, new_msg_id,
+            from_wxid, to_wxid, msg_type, content, msg_time, raw_data, NOW()
+        FROM wx_message
+        WHERE msg_time &lt; #{beforeTime}
+
+        ON DUPLICATE KEY UPDATE
+            user_id = VALUES(user_id),
+            app_id = VALUES(app_id),
+            wxid = VALUES(wxid),
+            msg_id = VALUES(msg_id),
+            new_msg_id = VALUES(new_msg_id),
+            from_wxid = VALUES(from_wxid),
+            to_wxid = VALUES(to_wxid),
+            msg_type = VALUES(msg_type),
+            content = VALUES(content),
+            msg_time = VALUES(msg_time),
+            raw_data = VALUES(raw_data),
+            archive_time = NOW()
+    </insert>
+
+    <delete id="deleteArchivedMessages" parameterType="java.lang.Long">
+        DELETE FROM wx_message
+        WHERE msg_time &lt; #{beforeTime}
+    </delete>
+
+</mapper>

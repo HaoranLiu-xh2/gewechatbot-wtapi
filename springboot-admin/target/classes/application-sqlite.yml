@@ -1,0 +1,64 @@
+server:
+  # 服务端口
+  port: 8080
+  servlet:
+    # 应用上下文路径
+    context-path: /
+    # 响应编码配置
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+
+spring:
+  application:
+    # 应用名称
+    name: springboot-admin
+  sql:
+    init:
+      # 服务启动时执行 schema-sqlite.sql 初始化数据
+      mode: always
+      schema-locations: classpath:schema-sqlite.sql
+      data-locations: classpath:data.sql
+      continue-on-error: true
+  datasource:
+    # SQLite 连接地址（文件存储在当前目录下的 wx.db）
+    url: jdbc:sqlite:wx.db
+    # SQLite 不需要用户名密码
+    username:
+    password:
+    # 数据库驱动
+    driver-class-name: org.sqlite.JDBC
+
+# JWT 配置
+jwt:
+  # 密钥（生产环境请使用复杂字符串）
+  secret: SpringBootAdminJwtSecretKey2024!
+  # Token 有效期（单位：毫秒，默认 7 天）
+  expiration: 604800000
+  # Token 请求头名称
+  header: Authorization
+  # Token 前缀
+  prefix: Bearer
+
+# MyBatis Plus 配置
+mybatis-plus:
+  # Mapper XML 文件位置
+  mapper-locations: classpath*:mapper/**/*.xml
+  # 实体类别名包路径
+  type-aliases-package: com.example.admin.entity
+  configuration:
+    # 开启驼峰命名自动映射
+    map-underscore-to-camel-case: true
+    # 开启日志打印（开发环境）
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 日志配置
+logging:
+  # 日志配置文件位置
+  config: classpath:logback-spring.xml
+  level:
+    # 根日志级别
+    root: info
+    # 项目包日志级别
+    com.example.admin: debug

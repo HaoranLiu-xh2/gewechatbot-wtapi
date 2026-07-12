@@ -1,0 +1,49 @@
+
+## 快速开始
+
+### 1. 克隆项目
+```bash
+git clone https://github.com/yourname/your-repo.git
+```
+
+### 2. 启动后端
+```bash
+cd springboot-admin
+mvn clean package -DskipTests
+java -jar target/springboot-admin-1.0.0.jar --spring.profiles.active=sqlite
+```
+
+### 3. 启动前端
+```bash
+cd vue-admin
+npm install
+npm run dev
+```
+
+## 配置说明
+
+| 配置项 | 说明 | 默认值 |
+|--------|------|--------|
+| spring.profiles.active | 数据库类型：sqlite / mysql | sqlite |
+| ... | ... | ... |
+
+## 接口说明
+
+- 登录轮询：`POST /finder/v2/api/login/checkLogin`
+- WebSocket：`ws://127.0.0.1:8080/ws/chat?token=xxx`
+- ...
+
+## 注意事项 / 踩坑记录
+
+1. messageId 必须用字符串返回，防止 JS 精度丢失
+2. wx.chuapi.com 接口需要带 `X-finder-TOKEN` 请求头
+3. WebSocket 需要在开发服务器配置 `/ws` 代理
+4. ...
+
+## 截图
+
+（放几张核心页面截图）
+
+## License
+
+MIT
