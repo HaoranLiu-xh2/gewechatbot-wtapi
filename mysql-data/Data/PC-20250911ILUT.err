@@ -1,5 +1,0 @@
-2026-06-29T05:41:03.082543Z 0 [System] [MY-013169] [Server] D:\Java\mysql-8.0.42-winx64\bin\mysqld.exe (mysqld 8.0.42) initializing of server in progress as process 3800
-2026-06-29T05:41:03.192500Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
-2026-06-29T05:41:03.588972Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
-2026-06-29T05:41:04.595870Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
-2026-06-29T05:41:04.690415Z 6 [Warning] [MY-013360] [Server] Plugin mysql_native_password reported: ''mysql_native_password' is deprecated and will be removed in a future release. Please use caching_sha2_password instead'
