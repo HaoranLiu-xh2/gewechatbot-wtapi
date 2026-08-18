@@ -169,9 +169,11 @@ POST /api/wx/message/callback  // 接收消息回调
 5. 为保证账号稳定，建议将服务部署到与登录微信同省的网络环境中。
 6. 本框架面向个人娱乐和学习使用，请勿用于任何商用场景。
 7. 首次部署后请先调用注册接口创建账号，再登录获取 Token。
-8. 威-YLXYX0
-9. 企鹅2560102000
-10. 企鹅交流君羊377619144
+8. 官网www.chuapi.com
+9. <img width="606" height="618" alt="image" src="https://github.com/user-attachments/assets/d981f77a-cdfa-4eeb-9c8f-e7288fbb8f71" />
+10. 威-YLXYX0
+11. 企鹅2560102000
+12. 企鹅交流君羊377619144
 ---
 
 ## 版本更新
