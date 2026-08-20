@@ -30,7 +30,7 @@ const routes = [
       {
         path: '/mass-message',
         name: 'MassMessage',
-        component: () => import('@/components/PlaceholderView.vue'),
+        component: () => import('@/views/mass-message/index.vue'),
         meta: {
           title: '消息群发任务',
           icon: 'Promotion',

@@ -28,6 +28,27 @@ spring:
       max-file-size: 100MB
       # 单次请求最大大小
       max-request-size: 100MB
+  redis:
+    # Redis 服务器地址（群发定时任务依赖 Redis 延迟队列）
+    host: 127.0.0.1
+    # Redis 服务器端口
+    port: 6379
+    # Redis 密码（无密码可留空）
+    password:
+    # Redis 数据库索引
+    database: 0
+    # 连接超时时间（毫秒）
+    timeout: 5000
+    lettuce:
+      pool:
+        # 连接池最大连接数
+        max-active: 8
+        # 连接池最大空闲连接数
+        max-idle: 8
+        # 连接池最小空闲连接数
+        min-idle: 0
+        # 连接池最大阻塞等待时间（毫秒）
+        max-wait: 3000
 
 # JWT 配置
 jwt:
